@@ -271,7 +271,26 @@ class UserDetail(generics.ListAPIView):
         queryset = self.get_queryset()
         serializer = serializers.UserSerializer(queryset,many=True)
         return Response(serializer.data)
-    
+# admin login
+@csrf_exempt
+def owner_login(request):
+    username=request.POST.get('username')
+    password=request.POST.get('password')
+    user=authenticate(username=username,password=password)
+    # print(username)
+    if user:
+        owner=models.Owner.objects.get(user=user)
+        msg={
+            'bool':True,
+            'user':user.username,
+            'id':owner.id
+         }
+    else:
+        msg={
+            'bool':False,
+            'msg':'Invalid username/password',
+            }
+    return JsonResponse(msg)    
 # customer login
 @csrf_exempt
 def customer_login(request):
@@ -646,6 +665,19 @@ def vendor_dashboard(request,pk):
     }  
     return JsonResponse(msg)
 
+# admin_dashboard
+# def owner_dashboard(request,pk):
+#     owner_id=pk
+#     totalOrders=models.OrderItems.objects.filter(product__owner__id=owner_id).count()
+#     totalProducts=models.Product.objects.filter(owner__id=owner_id).count()
+#     # fetch unique customer so added by value
+#     totalCustomers=models.OrderItems.objects.filter(product__owner__id=owner_id).values('order__customer').count()
+#     msg={
+#         'totalOrders':totalOrders,
+#         'totalProducts':totalProducts,
+#         'totalCustomers':totalCustomers,
+#     }  
+#     return JsonResponse(msg)
 # create_razorpay_order in backend
 @csrf_exempt
 def create_razorpay_order(request):

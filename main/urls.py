@@ -7,6 +7,8 @@ router.register('address',views.CustomerAddressViewSet)
 router.register('productrating',views.ProductRatingViewSet)
 
 urlpatterns = [
+    # Admin Panel
+    path('owner/login/',views.owner_login,name='owner_login'),
     # Vendors/Seller
     path('vendors/',views.VendorList.as_view()),
     path('vendor/<int:pk>/dashboard/',views.vendor_dashboard),

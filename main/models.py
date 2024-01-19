@@ -4,7 +4,14 @@ from django.db.models import Count,Sum
 import datetime
 
 # Create your models here.
+# Admin Model
+class Owner(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    mobile=models.PositiveBigIntegerField(unique=True)
+    profile_img=models.ImageField(upload_to='owner_imgs/',null=True)
 
+    def __str__(self):
+        return self.user.username
 # vendor/seller model
 class Vendor(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
@@ -115,6 +122,7 @@ class Customer(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     mobile=models.PositiveBigIntegerField(unique=True)
     profile_img=models.ImageField(upload_to='customer_imgs/',null=True)
+    # address=models.TextField(null=True)
 
     def __str__(self):
         return self.user.username

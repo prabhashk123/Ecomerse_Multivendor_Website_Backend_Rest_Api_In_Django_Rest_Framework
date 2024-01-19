@@ -7,7 +7,7 @@ from rest_framework.response import Response
 class VendorSerializer(serializers.ModelSerializer):
     class Meta:
         model=models.Vendor
-        fields=['id','user','address','profile_img','categories']
+        fields=['id','user','mobile','address','profile_img','categories']
     def __init__(self,*args,**kwargs):
         super(VendorSerializer,self).__init__(*args, **kwargs)
         # self.Meta.depth=1
@@ -69,11 +69,15 @@ class UserSerializer(serializers.ModelSerializer):
 class CustomerSerializer(serializers.ModelSerializer):
     class Meta:
         model=models.Customer
-        fields=['id','user','mobile']
+        fields=['id','user','mobile','profile_img',]
     def __init__(self,*args, **kwargs):
         super(CustomerSerializer,self).__init__(*args, **kwargs)
         # add for fetching vendor customer
         # self.Meta.depth=1
+    def to_representation(self, instance):
+        response=super().to_representation(instance)
+        response['user']=UserSerializer(instance.user).data
+        return response
 
 class CustomerDetailSerializer(serializers.ModelSerializer):
     class Meta:

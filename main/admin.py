@@ -9,7 +9,7 @@ admin.site.register(models.Customer)
 # admin.site.register(models.Order)
 admin.site.register(models.CustomerAddress)
 admin.site.register(models.ProductRating)
-
+admin.site.register(models.Owner)
 
 # Product image
 admin.site.register(models.ProductImage)
