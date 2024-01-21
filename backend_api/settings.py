@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "corsheaders",
     'rest_framework',
     'main',
+    "django_postgres_backup"
 ]
 
 MIDDLEWARE = [
