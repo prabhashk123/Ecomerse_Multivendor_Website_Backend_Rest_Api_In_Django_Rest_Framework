@@ -157,6 +157,7 @@ REST_FRAMEWORK = {
 # cors origin for api
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000'
+    'https://vercel.com/prabhashk123s-projects/ecomerse-multivendor-website-frontend-in-react-js'
     
 ]
 # for image
