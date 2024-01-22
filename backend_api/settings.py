@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-#=s6#eblas2a6&jn5_c8%kw!5bfjatdqnu8ol6z1^+%aco@ke3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -93,7 +93,8 @@ DATABASES = {
     }
 }
 # add for render depoly
-ALLOWED_HOSTS=os.environ.get['ALLOWED_HOSTS']
+DEBUG=os.environ.get("DEBUG",'False').lower()=='true'
+ALLOWED_HOSTS=os.environ.get('ALLOWED_HOSTS')
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
