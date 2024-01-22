@@ -74,9 +74,8 @@ TEMPLATES = [
         },
     },
 ]
-
+# for depolyment
 WSGI_APPLICATION = 'backend_api.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
@@ -156,9 +155,7 @@ REST_FRAMEWORK = {
 }
 # cors origin for api
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000'
-    'https://ecomerse-multivendor-website-frontend-in-react-pzyip9o2i.vercel.app/'
-    
+    'http://localhost:3000'    
 ]
 # for image
 MEDIA_URL='/media/'
