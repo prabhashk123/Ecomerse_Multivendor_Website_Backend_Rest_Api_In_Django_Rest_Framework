@@ -92,7 +92,8 @@ DATABASES = {
         'HOST': 'localhost',
     }
 }
-
+# add for render depoly
+ALLOWED_HOSTS=os.environ.get['ALLOWED_HOSTS']
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
