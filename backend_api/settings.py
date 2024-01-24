@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 import os
 from pathlib import Path
+# import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -95,6 +96,7 @@ DATABASES = {
 # DEBUG=os.environ.get("DEBUG",'False').lower()=='true'
 # ALLOWED_HOSTS=os.environ.get("ALLOWED_HOSTS")
 # ALLOWED_HOSTS = ['*']
+# DATABASES['default']=dj_database_url.parse('postgres://ecomerse_45tr_user:VdlruVcZbTU3eK1tH0Na1Lgt0UwMqmYo@dpg-cmmvkqmn7f5s73aeflhg-a.oregon-postgres.render.com/ecomerse_45tr')
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
