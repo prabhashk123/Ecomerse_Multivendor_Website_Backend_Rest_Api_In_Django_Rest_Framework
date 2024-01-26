@@ -187,7 +187,10 @@ class ProductList(generics.ListCreateAPIView):
                 qs=qs.order_by('-downloads','-id')
                 qs = qs[:limit ]
             return qs
-
+# Product Modify For admin
+class ProductModify(generics.RetrieveUpdateAPIView):
+    queryset=models.Product.objects.all()
+    serializer_class=serializers.ProductListSerializer 
 # Product Image
 class ProductImgsList(generics.ListCreateAPIView):
     queryset=models.ProductImage.objects.all()

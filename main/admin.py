@@ -17,7 +17,7 @@ class ProductImageInline(admin.StackedInline):
     model=models.ProductImage
     
 class ProductAdmin(admin.ModelAdmin):
-    list_display=['title','price','usd_price','downloads']
+    list_display=['title','price','usd_price','publish_status','downloads']
     list_editable=['usd_price']
     prepopulated_fields={'slug':('title',)}
     inlines=[
