@@ -17,6 +17,9 @@ from django.contrib.auth.hashers import make_password
 from django.db.models import Count
 # razorpay
 import razorpay
+# for mail
+from django.conf import settings
+from django.core.mail import send_mail
 
 # Create your views here.
 # vendors & Seller below in order by n (- means desending order)
@@ -67,7 +70,7 @@ def vendor_register(request):
     address=request.POST.get('address')
     password=request.POST.get('password')
     try:
-        user=User.objects.create(first_name=first_name,last_name=last_name,username=username,email=email,password=password)
+        user=User.objects.create_user(first_name=first_name,last_name=last_name,username=username,email=email,password=password)
         print(user)
         if user:
             try:
@@ -296,9 +299,8 @@ def owner_login(request):
 def customer_login(request):
     username=request.POST.get('username')
     password=request.POST.get('password')
-    user=authenticate(username=username,password=password)
-    # print(username)
-    if user:
+    user=authenticate(username=username,password=password) 
+    if user: 
         customer=models.Customer.objects.get(user=user)
         msg={
             'bool':True,
@@ -313,6 +315,7 @@ def customer_login(request):
     return JsonResponse(msg)
 
 # for customer register
+# use create_user method for create hashd form of password
 @csrf_exempt
 def customer_register(request):
     first_name=request.POST.get('first_name')
@@ -322,8 +325,7 @@ def customer_register(request):
     mobile=request.POST.get('mobile')
     password=request.POST.get('password')
     try:
-        user=User.objects.create(first_name=first_name,last_name=last_name,username=username,email=email,password=password)
-        print(user)
+        user=User.objects.create_user(first_name=first_name,last_name=last_name,username=username,email=email,password=password)
         if user:
             try:
                 # Create customer from model
@@ -364,7 +366,40 @@ def customer_change_password(request,customer_id):
     user.save()
     msg={'bool':True,'msg':'Password has been changed'}
     return JsonResponse(msg)
-# Order Views
+# Customer Forgot password
+@csrf_exempt
+def customer_forgot_password(request):
+        email=request.POST.get('email')
+        # Use the appropriate field path to access it, such as user.email if the email is stored in a related User model.
+        verify=models.Customer.objects.filter(user__email=email).first()
+        if verify:
+            link=f'http://localhost:3000/customer/resetpassword/{verify.id}'
+            subject = 'Your account needs to be verified'
+            email_from = settings.EMAIL_HOST_USER
+            html_message=f'please click this link. {link}'
+            send_mail(subject , html_message , email_from , [email])
+            return JsonResponse({'bool':True,'msg':'Email sent successfully'})
+        else:
+            return JsonResponse({'bool':False,'msg':'Invalid Email!!'})
+# Customer Reset password
+@csrf_exempt
+def customer_reset_password(request, customer_id):
+    customer = models.Customer.objects.filter(id=customer_id).first()
+    if customer:
+        user=customer.user      
+        if user:
+            password = request.POST.get('password')
+            if password is not None and password.strip():
+                user.set_password(password) #relationship Customer is related to User use set_password()
+                user.save() 
+                return JsonResponse({'bool': True,  'msg': 'Password has been updated successfully'})
+            else:
+                return JsonResponse({'bool': False, 'msg': 'Password is Empty'})
+        else:
+            return JsonResponse({'bool': False, 'msg': 'Customer has no associated user'})
+    else:
+        return JsonResponse({'bool': False, 'msg': 'customer not found'})
+#  Order Views
 class OrderList(generics.ListCreateAPIView):
     queryset=models.Order.objects.all()
     serializer_class=serializers.OrderSerializer

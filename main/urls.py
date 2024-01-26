@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from django.contrib.auth import views as auth_views
 # for customeraddress router
 from rest_framework import routers
 router=routers.DefaultRouter()
@@ -38,6 +39,8 @@ urlpatterns = [
     path('customer/login/',views.customer_login,name='customer_login'),
     path('customer/register/',views.customer_register,name='customer_register'),
     path('customer-change-password/<int:customer_id>/',views.customer_change_password),
+    path('customer-forgot-password/',views.customer_forgot_password),
+    path('customer-reset-password/<int:customer_id>/',views.customer_reset_password),
     path('customer/<int:pk>/address-list/',views.CustomerAddressList.as_view()),
     path('mark-default-address/<int:pk>/',views.mark_default_address,name='mark-default-address'),
     # Order for both vendor/customer

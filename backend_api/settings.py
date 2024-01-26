@@ -155,10 +155,18 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'main.pagination.CustomPagination',
     'PAGE_SIZE':100 
 }
-# cors origin for api
+# cors origin for django rest framework api using reactJs frontend
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000'    
 ]
 # for image
 MEDIA_URL='/media/'
 MEDIA_ROOT=os.path.join(BASE_DIR,'media')
+# for email setup this send gmail django 
+EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS=True
+EMAIL_USE_SSL = False
+EMAIL_PORT=587
+EMAIL_HOST_USER='prabhashbhagat1999@gmail.com'
+EMAIL_HOST_PASSWORD='lwzv zqdz uczk apwb'
