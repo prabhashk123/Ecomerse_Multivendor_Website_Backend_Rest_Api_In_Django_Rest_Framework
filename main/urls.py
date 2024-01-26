@@ -18,6 +18,8 @@ urlpatterns = [
     path('vendor/<int:pk>/',views.VendorDetail.as_view()),
     path('vendor/register/',views.vendor_register,name='vendor_register'),
     path('vendor/login/',views.vendor_login,name='vendor_login'),
+    path('vendor-forgot-password/',views.vendor_forgot_password),
+    path('vendor-reset-password/<int:vendor_id>/',views.vendor_reset_password),
     path('vendor/<int:pk>/customers/',views.VendorCustomerList.as_view()),
     path('vendor/<int:vendor_id>/customer/<int:customer_id>/orderitems/',views.VendorCustomerOrderItemList.as_view()),
     # Product and tag

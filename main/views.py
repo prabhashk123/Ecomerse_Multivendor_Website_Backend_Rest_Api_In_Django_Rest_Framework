@@ -133,7 +133,39 @@ def vendor_change_password(request,vendor_id):
     user.save()
     msg={'bool':True,'msg':'Password has been changed'}
     return JsonResponse(msg)
-
+# Vendor/Seller Forgot password
+@csrf_exempt
+def vendor_forgot_password(request):
+        email=request.POST.get('email')
+        # Use the appropriate field path to access it, such as user.email if the email is stored in a related User model.
+        verify=models.Vendor.objects.filter(user__email=email).first()
+        if verify:
+            link=f'http://localhost:3000/seller/resetpassword/{verify.id}'
+            subject = 'Your account needs to be verified'
+            email_from = settings.EMAIL_HOST_USER
+            html_message=f'please click this link. {link}'
+            send_mail(subject , html_message , email_from , [email])
+            return JsonResponse({'bool':True,'msg':'Email has been sent successfully'})
+        else:
+            return JsonResponse({'bool':False,'msg':'Invalid Email!!'})
+# Vendor/Seller Reset password
+@csrf_exempt
+def vendor_reset_password(request, vendor_id):
+    vendor = models.Vendor.objects.filter(id=vendor_id).first()
+    if vendor:
+        user=vendor.user      
+        if user:
+            password = request.POST.get('password')
+            if password is not None and password.strip():
+                user.set_password(password) #relationship Customer is related to User use set_password()
+                user.save() 
+                return JsonResponse({'bool': True,  'msg': 'Password has been updated successfully'})
+            else:
+                return JsonResponse({'bool': False, 'msg': 'Password is Empty'})
+        else:
+            return JsonResponse({'bool': False, 'msg': 'Vendor has no associated user'})
+    else:
+        return JsonResponse({'bool': False, 'msg': 'Vendor not found'})
 # Product
 class ProductList(generics.ListCreateAPIView):
     queryset=models.Product.objects.all()
