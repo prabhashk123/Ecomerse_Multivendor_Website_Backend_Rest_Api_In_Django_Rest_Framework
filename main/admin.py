@@ -47,3 +47,7 @@ class WishlistAdmin(admin.ModelAdmin):
     list_display=['id','product','customer']
 
 admin.site.register(models.Wishlist,WishlistAdmin)
+# Modify Notifications model
+class NotificationsAdmin(admin.ModelAdmin):
+    list_display=['id','owner','subject','notif_created_time']
+admin.site.register(models.Notification,NotificationsAdmin)

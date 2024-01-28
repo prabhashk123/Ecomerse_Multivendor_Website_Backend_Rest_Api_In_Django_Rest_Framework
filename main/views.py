@@ -38,8 +38,7 @@ class VendorList(generics.ListCreateAPIView):
             limit = int(self.request.GET['fetch_limit'])
             qs=qs.annotate(downloads=Count('product')).order_by('-downloads','-id')
             qs = qs[:limit ]
-        return qs
-    
+        return qs   
 class VendorDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset=models.Vendor.objects.all()
     serializer_class=serializers.VendorDetailSerializer
@@ -103,7 +102,7 @@ def vendor_register(request):
                 }
 
     return JsonResponse(msg)
-# vendor_login
+# vendor login
 @csrf_exempt
 def vendor_login(request):
     username=request.POST.get('username')
@@ -123,7 +122,7 @@ def vendor_login(request):
             'msg':'Invalid username/password',
             }
     return JsonResponse(msg)
-# Vendor change password
+# Vendor/seller change password
 @csrf_exempt
 def vendor_change_password(request,vendor_id):
     password=request.POST.get('password')
@@ -186,7 +185,7 @@ class ProductList(generics.ListCreateAPIView):
                 limit = int(self.request.GET['fetch_popular_products_limit'])
                 qs=qs.order_by('-downloads','-id')
                 qs = qs[:limit ]
-            return qs
+            return qs  
 # Product Modify For admin
 class ProductModify(generics.RetrieveUpdateAPIView):
     queryset=models.Product.objects.all()
@@ -201,7 +200,6 @@ class ProductImgsList(generics.ListCreateAPIView):
         queryset = self.get_queryset()
         serializer = serializers.ProductImageSerializer(queryset,many=True)
         return Response(serializer.data)
-
 class ProductImgsDetail(generics.ListCreateAPIView):
     queryset=models.ProductImage.objects.all()
     serializer_class=serializers.ProductImageSerializer
@@ -230,8 +228,7 @@ class TagProductList(generics.ListCreateAPIView):
         qs = super().get_queryset()
         tag = self.kwargs['tag']
         qs = qs.filter(tags__icontains=tag)
-        return qs
-    
+        return qs   
 # Related product
 class RelatedProductList(generics.ListCreateAPIView):
     queryset=models.Product.objects.all()
@@ -244,11 +241,10 @@ class RelatedProductList(generics.ListCreateAPIView):
         product=models.Product.objects.get(id=product_id)
         qs=qs.filter(category=product.category).exclude(id=product_id)
         return qs
-
 class ProductDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset=models.Product.objects.all()
     serializer_class=serializers.ProductDetailSerializer
-# for downloads
+# for Product downloads
 @csrf_exempt
 def update_product_download_count(request,product_id):
     msg = {'bool': False}  # Initialize msg here
@@ -285,7 +281,7 @@ def update_product_download_count(request,product_id):
 #             msg = {'bool': False, 'error': str(e)}
 #     return JsonResponse(msg)
 
-# Customer views and user views
+# Customer views
 class CustomerList(generics.ListCreateAPIView):
     queryset=models.Customer.objects.all()
     serializer_class=serializers.CustomerSerializer
@@ -293,7 +289,6 @@ class CustomerList(generics.ListCreateAPIView):
         queryset = self.get_queryset()
         serializer = serializers.CustomerSerializer(queryset,many=True)
         return Response(serializer.data)
-
 class CustomerDetail(generics.ListAPIView):
     queryset=models.Customer.objects.all()
     serializer_class=serializers.CustomerDetailSerializer
@@ -301,7 +296,7 @@ class CustomerDetail(generics.ListAPIView):
         queryset = self.get_queryset()
         serializer = serializers.CustomerDetailSerializer(queryset,many=True)
         return Response(serializer.data)
-    
+#For Auth user 
 class UserDetail(generics.ListAPIView):
     queryset=models.User.objects.all()
     serializer_class=serializers.UserSerializer
@@ -348,9 +343,7 @@ def customer_login(request):
             'msg':'Invalid username/password',
             }
     return JsonResponse(msg)
-
-# for customer register
-# use create_user method for create hashd form of password
+## for customer register use create_user method for create hashd form of password
 @csrf_exempt
 def customer_register(request):
     first_name=request.POST.get('first_name')
@@ -581,8 +574,7 @@ class VendorCustomerList(generics.ListAPIView):
         qs = super().get_queryset()
         vendor_id=self.kwargs['pk']
         qs=qs.filter(product__vendor__id=vendor_id)
-        return qs
-    
+        return qs   
 # CustomerOrderItemlist for vendor
 class VendorCustomerOrderItemList(generics.ListAPIView):
     queryset=models.OrderItems.objects.all()
@@ -615,7 +607,6 @@ def mark_default_address(request,pk):
             'bool':True
             }   
     return JsonResponse(msg)
-
 # Product ratings
 class ProductRatingViewSet(viewsets.ModelViewSet):
     queryset=models.ProductRating.objects.all()
@@ -624,7 +615,6 @@ class ProductRatingViewSet(viewsets.ModelViewSet):
         queryset = self.get_queryset()
         serializer = serializers.ProductRatingSerializer(queryset,many=True)
         return Response(serializer.data)
-
 # Category view
 class CategoryList(generics.ListCreateAPIView):
     queryset=models.ProductCategory.objects.all()
@@ -642,21 +632,18 @@ class CategoryList(generics.ListCreateAPIView):
             limit = int(self.request.GET['fetch_popular_category_limit'])
             qs=qs.annotate(downloads=Count('category_product')).order_by('-downloads','-id')
             qs = qs[:limit ]
-        return qs
-  
+        return qs 
 class CategoryDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset=models.ProductCategory.objects.all()
     serializer_class=serializers.CategoryDetailSerializer
     def list(self, request):
         queryset = self.get_queryset()
         serializer = serializers.CategoryDetailSerializer(queryset,many=True)
-        return Response(serializer.data)
-    
+        return Response(serializer.data)   
 # Wishlist View
 class WishList(generics.ListCreateAPIView):
     queryset=models.Customer.objects.all()
     serializer_class=serializers.WishlistSerializer
-
 # update_Wishlist_status
 @csrf_exempt
 def check_in_wishlist(request):
@@ -674,7 +661,6 @@ def check_in_wishlist(request):
             }
         
     return JsonResponse(msg)
-
 # Customer wish item 
 class CustomerWishItemsList(generics.ListAPIView):
     queryset=models.Wishlist.objects.all()
@@ -690,7 +676,6 @@ class CustomerWishItemsList(generics.ListAPIView):
         customer_id=self.kwargs['pk']
         qs=qs.filter(customer__id=customer_id)
         return qs
-
 #Customer Remove Item from wishlist
 @csrf_exempt
 def remove_from_wishlist(request):
@@ -707,7 +692,6 @@ def remove_from_wishlist(request):
             }
         
     return JsonResponse(msg)
-
 # customer_dashboard
 def customer_dashboard(request,pk):
     customer_id=pk
@@ -719,8 +703,7 @@ def customer_dashboard(request,pk):
         'totalWishList':totalWishList,
         'totalAddress':totalAddress,
     }  
-    return JsonResponse(msg)
-    
+    return JsonResponse(msg)    
 # vendor_dashboard
 def vendor_dashboard(request,pk):
     vendor_id=pk
@@ -734,7 +717,6 @@ def vendor_dashboard(request,pk):
         'totalCustomers':totalCustomers,
     }  
     return JsonResponse(msg)
-
 # admin_dashboard
 # def owner_dashboard(request,pk):
 #     owner_id=pk
@@ -768,3 +750,20 @@ def create_razorpay_order(request):
             'bool':False
         }
     return JsonResponse(msg)
+# Notifications views
+class NotificationsList(generics.ListCreateAPIView):
+    queryset=models.Notification.objects.all()
+    serializer_class=serializers.NotificationsListSerializer
+    def list(self, request,*args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = serializers.NotificationsListSerializer(queryset,many=True)
+        return Response(serializer.data)
+class NotificationDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset=models.Notification.objects.all()
+    serializer_class=serializers.NotificationsDetailSerializer
+#If not use pk(primary key for id) in url then use lookup_field='id
+    lookup_field='id'
+    def list(self, request,*args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = serializers.NotificationsDetailSerializer(queryset,many=True)
+        return Response(serializer.data)

@@ -189,12 +189,21 @@ class ProductImage(models.Model):
 class Wishlist(models.Model):
     product=models.ForeignKey(Product,on_delete=models.CASCADE)
     customer=models.ForeignKey(Customer,on_delete=models.CASCADE)
-
     class Meta:
         verbose_name_plural='Wish List'
 
     def __str__(self):
         return f"{self.product.title} - {self.customer.user.first_name}"
+
+# For Notifications
+class Notification(models.Model):
+    owner=models.ForeignKey(Owner,on_delete=models.CASCADE,null=True)
+    subject=models.CharField(max_length=200,verbose_name='message',null=True)
+    notif_created_time=models.DateTimeField(auto_now_add=True)
+    class Meta:
+        verbose_name_plural='5. Notifications'
+
+
 
 
 
