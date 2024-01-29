@@ -206,14 +206,14 @@ class Notification(models.Model):
 class Contact(models.Model):
     name=models.CharField(max_length=100,null=True)
     email=models.EmailField(null=True)
-    phone=models.IntegerField(max_length=10,null=True)
+    phone=models.IntegerField(max_length=50,null=True)
     address=models.TextField(max_length=200,null=True)
     query=models.CharField(max_length=200,null=True)
     countary=models.CharField(max_length=100,null=True)
     code=models.CharField(max_length=10,null=True)
     state=models.CharField(max_length=100,null=True)
     city=models.CharField(max_length=100,null=True)
-    pincode=models.IntegerField(max_length=6)
+    pincode=models.IntegerField(null=True)
     querydetail=models.TextField(max_length=200,null=True)
 
     def __str__(self):
