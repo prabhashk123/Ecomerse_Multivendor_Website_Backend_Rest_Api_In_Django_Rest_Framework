@@ -180,4 +180,8 @@ class NotificationsDetailSerializer(serializers.ModelSerializer):
          fields='__all__'
     def __init__(self,*args,**kwargs):
         super(NotificationsDetailSerializer,self).__init__(*args, **kwargs)
-        
+#For contact
+class contactUsListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=models.Contact
+        fields='__all__'  

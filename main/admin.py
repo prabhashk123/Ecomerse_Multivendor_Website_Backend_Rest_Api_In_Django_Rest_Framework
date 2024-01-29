@@ -51,3 +51,7 @@ admin.site.register(models.Wishlist,WishlistAdmin)
 class NotificationsAdmin(admin.ModelAdmin):
     list_display=['id','owner','subject','notif_created_time']
 admin.site.register(models.Notification,NotificationsAdmin)
+# for contact
+class ContactUsAdmine(admin.ModelAdmin):
+    list_display=['name','email','code','phone','address','pincode','countary','state','city','query','querydetail']
+admin.site.register(models.Contact,ContactUsAdmine)

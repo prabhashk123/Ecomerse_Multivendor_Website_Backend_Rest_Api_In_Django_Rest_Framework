@@ -767,3 +767,12 @@ class NotificationDetail(generics.RetrieveUpdateDestroyAPIView):
         queryset = self.get_queryset()
         serializer = serializers.NotificationsDetailSerializer(queryset,many=True)
         return Response(serializer.data)
+# Contact
+class contactUsList(generics.ListCreateAPIView):
+    queryset=models.Contact.objects.all()
+    serializer_class=serializers.contactUsListSerializer
+    def list(self, request,*args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = serializers.contactUsListSerializer(queryset,many=True)
+        return Response(serializer.data)
+    
