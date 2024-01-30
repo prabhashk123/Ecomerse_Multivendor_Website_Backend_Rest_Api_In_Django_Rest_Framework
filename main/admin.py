@@ -53,5 +53,5 @@ class NotificationsAdmin(admin.ModelAdmin):
 admin.site.register(models.Notification,NotificationsAdmin)
 # for contact
 class ContactUsAdmine(admin.ModelAdmin):
-    list_display=['name','email','code','phone','address','pincode','countary','state','city','query','querydetail']
+    list_display=['id','name','email','code','phone','address','pincode','countary','state','city','query','querydetail']
 admin.site.register(models.Contact,ContactUsAdmine)

@@ -17,7 +17,7 @@ from django.contrib.auth.hashers import make_password
 from django.db.models import Count
 # razorpay
 import razorpay
-# for mail
+# for django mail
 from django.conf import settings
 from django.core.mail import send_mail
 
@@ -289,7 +289,7 @@ class CustomerList(generics.ListCreateAPIView):
         queryset = self.get_queryset()
         serializer = serializers.CustomerSerializer(queryset,many=True)
         return Response(serializer.data)
-class CustomerDetail(generics.ListAPIView):
+class CustomerDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset=models.Customer.objects.all()
     serializer_class=serializers.CustomerDetailSerializer
     def list(self, request,*args, **kwargs):
@@ -297,7 +297,7 @@ class CustomerDetail(generics.ListAPIView):
         serializer = serializers.CustomerDetailSerializer(queryset,many=True)
         return Response(serializer.data)
 #For Auth user 
-class UserDetail(generics.ListAPIView):
+class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset=models.User.objects.all()
     serializer_class=serializers.UserSerializer
     def list(self, request,*args, pk):
@@ -767,7 +767,7 @@ class NotificationDetail(generics.RetrieveUpdateDestroyAPIView):
         queryset = self.get_queryset()
         serializer = serializers.NotificationsDetailSerializer(queryset,many=True)
         return Response(serializer.data)
-# Contact
+# Contact views
 class contactUsList(generics.ListCreateAPIView):
     queryset=models.Contact.objects.all()
     serializer_class=serializers.contactUsListSerializer
@@ -775,4 +775,10 @@ class contactUsList(generics.ListCreateAPIView):
         queryset = self.get_queryset()
         serializer = serializers.contactUsListSerializer(queryset,many=True)
         return Response(serializer.data)
-    
+class contactUsDetail(generics.RetrieveDestroyAPIView):
+    queryset=models.Contact.objects.all()
+    serializer_class=serializers.contactUsDetailSerializer
+    def list(self, request,*args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = serializers.contactUsDetailSerializer(queryset,many=True)
+        return Response(serializer.data)

@@ -110,6 +110,18 @@ class OrderItemsSerializer(serializers.ModelSerializer):
         response['user']=UserSerializer(instance.order.customer.user).data
         response['product']=ProductDetailSerializer(instance.product).data
         return response
+    # def to_representation(self, instance):
+    #     response = super().to_representation(instance)
+    #     order = instance.order
+    #     if order and order.customer and order.customer.user:
+    #         response['order'] = OrderSerializer(order).data
+    #         response['customer'] = CustomerSerializer(order.customer).data
+    #         response['user'] = UserSerializer(order.customer.user).data
+    #     else:
+    #     # Handle cases where order, customer, or user are missing
+    #     # Adjust response accordingly
+    #         response['product'] = ProductDetailSerializer(instance.product).data
+    #     return response
 class OrderDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model=models.OrderItems
@@ -182,6 +194,10 @@ class NotificationsDetailSerializer(serializers.ModelSerializer):
         super(NotificationsDetailSerializer,self).__init__(*args, **kwargs)
 #For contact
 class contactUsListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=models.Contact
+        fields='__all__'  
+class contactUsDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model=models.Contact
         fields='__all__'  

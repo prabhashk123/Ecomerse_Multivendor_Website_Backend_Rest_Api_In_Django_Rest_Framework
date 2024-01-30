@@ -13,6 +13,7 @@ urlpatterns = [
     path('vendor/allnotificatons/',views.NotificationsList.as_view()),
     path('vendor/allnotificaton/<int:id>/',views.NotificationDetail.as_view()),
     path('contactus/',views.contactUsList.as_view(),name='contactus'),
+    path('contact/<int:pk>/',views.contactUsDetail.as_view(),name='contactusdetail'),
     # Vendors/Seller
     path('vendors/',views.VendorList.as_view()),
     path('vendor/<int:pk>/dashboard/',views.vendor_dashboard),
