@@ -33,7 +33,7 @@ class CustomerAdmin(admin.ModelAdmin):
     
 # Modify Order in admin
 class OrderAdmin(admin.ModelAdmin):
-    list_display=['id','customer','order_time','total_amount','total_usd_amount','order_status','payment_mode','trans_ref']
+    list_display=['id','customer_id','customer','order_time','total_amount','total_usd_amount','order_status','payment_mode','trans_ref']
 admin.site.register(models.Order,OrderAdmin)
 
 # Modify OrderItems

@@ -76,7 +76,7 @@ class CustomerSerializer(serializers.ModelSerializer):
 class CustomerDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model=models.Customer
-        fields=['id','user','mobile','profile_img','customer_orders']
+        fields=['id','user','mobile','profile_img']
     def to_representation(self, instance):
         response=super().to_representation(instance)
         response["user"]=UserSerializer(instance.user).data
