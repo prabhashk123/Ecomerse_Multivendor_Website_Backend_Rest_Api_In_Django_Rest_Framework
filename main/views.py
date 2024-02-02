@@ -20,6 +20,8 @@ import razorpay
 # for django mail
 from django.conf import settings
 from django.core.mail import send_mail
+# for search
+from django.db.models import Q
 
 # Create your views here.
 # vendors & Seller below in order by n (- means desending order)
@@ -185,6 +187,12 @@ class ProductList(generics.ListCreateAPIView):
                 limit = int(self.request.GET['fetch_popular_products_limit'])
                 qs=qs.order_by('-downloads','-id')
                 qs = qs[:limit ]
+            if 'searchproductstring' in self.kwargs:
+                search = self.kwargs['searchproductstring']
+                if search:
+                    qs = models.Product.objects.filter(Q(title__icontains=search)|Q(detail__icontains=search))
+                else:
+                    qs = models.Product.objects.all()
             return qs  
 # Product Modify For admin
 class ProductModify(generics.RetrieveUpdateAPIView):

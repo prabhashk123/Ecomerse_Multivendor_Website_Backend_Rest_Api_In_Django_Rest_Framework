@@ -28,6 +28,7 @@ urlpatterns = [
     path('vendor/<int:vendor_id>/customer/<int:customer_id>/orderitems/',views.VendorCustomerOrderItemList.as_view()),
     # Product and tag
     path('products/',views.ProductList.as_view()),
+    path('search-products/<str:searchproductstring>/',views.ProductList.as_view()),
     path('product-imgs/',views.ProductImgsList.as_view()),
     path('product-imgs/<int:product_id>/',views.ProductImgsDetail.as_view()),
     path('product-img/<int:pk>/',views.ProductImgDetail.as_view()),
