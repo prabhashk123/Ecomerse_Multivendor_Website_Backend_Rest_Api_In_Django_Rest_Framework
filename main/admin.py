@@ -55,3 +55,15 @@ admin.site.register(models.Notification,NotificationsAdmin)
 class ContactUsAdmine(admin.ModelAdmin):
     list_display=['id','name','email','code','phone','address','pincode','countary','state','city','query','querydetail']
 admin.site.register(models.Contact,ContactUsAdmine)
+# for copan
+class CoupanAdmine(admin.ModelAdmin):
+    list_display=['id','code','discount_type','discount_value','minimum_order_value','active','start_date','expire_date']
+admin.site.register(models.Coupon,CoupanAdmine)    
+
+    
+
+    
+
+    
+
+    

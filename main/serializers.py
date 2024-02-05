@@ -201,3 +201,8 @@ class contactUsDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model=models.Contact
         fields='__all__'  
+# for coupan
+class CouponSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Coupon
+        fields = '__all__'

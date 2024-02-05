@@ -6,9 +6,11 @@ from rest_framework import routers
 router=routers.DefaultRouter()
 router.register('address',views.CustomerAddressViewSet)
 router.register('productrating',views.ProductRatingViewSet)
+router.register('coupan',views.CouponViewSet)
 
 urlpatterns = [
     # Admin Panel
+    path('coupan-modify/<int:pk>/',views.CoupanModify.as_view()),
     path('owner/login/',views.owner_login,name='owner_login'),
     path('vendor/allnotificatons/',views.NotificationsList.as_view()),
     path('vendor/allnotificaton/<int:id>/',views.NotificationDetail.as_view()),
@@ -62,6 +64,7 @@ urlpatterns = [
     path('vendor/<int:pk>/orderitems/',views.VendorOrderItemsList.as_view()),
     path('order-modify/<int:pk>/',views.OrderModify.as_view()),
     path('delete-customer-orders/<int:customer_id>/',views.delete_customer_orders),
+    path('delete-customer-order/<int:order_id>/',views.delete_customer_order),
     # Wishlist
     path('wishlist/',views.WishList.as_view()),
     path('check-in-wishlist/',views.check_in_wishlist,name='check_in_wishlist'),

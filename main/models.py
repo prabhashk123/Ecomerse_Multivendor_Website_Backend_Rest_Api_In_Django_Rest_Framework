@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import Count,Sum
+from django.core.validators import MinValueValidator, MaxValueValidator
+from django.utils import timezone
 import datetime
 
 # Create your models here.
@@ -218,6 +220,22 @@ class Contact(models.Model):
 
     def __str__(self):
         return self.name
+# for coupan
+class Coupon(models.Model):
+    code = models.CharField(max_length=255, unique=True)
+    discount_type = models.CharField(max_length=20, choices=[('percentage', 'Percentage'), ('fixed_amount', 'Fixed Amount')])
+    discount_value = models.DecimalField(max_digits=5, decimal_places=2, validators=[MinValueValidator(0), MaxValueValidator(100) if discount_type == 'percentage' else MaxValueValidator(10000)])
+    minimum_order_value = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(0)], blank=True, null=True)
+    active = models.BooleanField(default=True)
+    start_date = models.DateTimeField(default=timezone.now)
+    expire_date = models.DateTimeField(null=True,blank=True)
+
+    def is_valid(self):
+        now =timezone.now()
+        return self.start_date<=now<=self.expire_date
+    
+    def __str__(self):
+        return f"{self.code} ({self.discount_type}: {self.discount_value})"
 
     
 

@@ -486,7 +486,22 @@ def delete_customer_orders(request,customer_id):
             }
         
     return JsonResponse(msg)
-   
+# For customer order delete function
+@csrf_exempt
+def delete_customer_order(request,order_id):
+    msg = {'bool': False}
+    if request.method=='DELETE':
+        orders=models.Order.objects.filter(id=order_id).delete()
+        msg={
+            'bool':False
+            }
+        if orders:
+             msg={
+            'bool':True
+            }
+        
+    return JsonResponse(msg)
+ 
 # update_order_status
 @csrf_exempt
 def update_order_status(request,order_id):
@@ -790,3 +805,14 @@ class contactUsDetail(generics.RetrieveDestroyAPIView):
         queryset = self.get_queryset()
         serializer = serializers.contactUsDetailSerializer(queryset,many=True)
         return Response(serializer.data)
+# for coupan
+class CouponViewSet(viewsets.ModelViewSet):
+    queryset = models.Coupon.objects.all()
+    serializer_class = serializers.CouponSerializer
+    def list(self, request):
+        queryset = self.get_queryset()
+        serializer = serializers.CouponSerializer(queryset,many=True)
+        return Response(serializer.data)
+class CoupanModify(generics.RetrieveUpdateDestroyAPIView):
+    queryset=models.Coupon.objects.all()
+    serializer_class=serializers.CouponSerializer  
