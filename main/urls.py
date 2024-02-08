@@ -10,6 +10,7 @@ router.register('coupan',views.CouponViewSet)
 
 urlpatterns = [
     # Admin Panel
+    path('apply-coupon/',views.apply_coupon,name='apply_coupon'),
     path('coupan-modify/<int:pk>/',views.CoupanModify.as_view()),
     path('owner/login/',views.owner_login,name='owner_login'),
     path('vendor/allnotificatons/',views.NotificationsList.as_view()),

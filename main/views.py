@@ -816,3 +816,19 @@ class CouponViewSet(viewsets.ModelViewSet):
 class CoupanModify(generics.RetrieveUpdateDestroyAPIView):
     queryset=models.Coupon.objects.all()
     serializer_class=serializers.CouponSerializer  
+    
+@csrf_exempt
+def apply_coupon(request):
+    if request.method == 'POST':
+        coupon_code = request.POST.get('code')
+        # print(coupon_code)
+        try:
+            coupon = models.Coupon.objects.get(code=coupon_code, active=True)
+            # print(coupon.discount_value)
+            if coupon.is_valid():
+                return JsonResponse({'discount': 'Coupon applied successfully','discount_value': coupon.discount_value,})
+            else:
+                return JsonResponse({'error': 'Coupon is expired or not yet valid.'})
+        except models.Coupon.DoesNotExist:
+            return JsonResponse({'error': 'Invalid coupon code.'})
+    return JsonResponse({'error': 'Coupon not exit.'})
