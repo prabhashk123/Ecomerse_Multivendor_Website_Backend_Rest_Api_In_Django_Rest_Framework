@@ -56,6 +56,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # for herque
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'backend_api.urls'
@@ -170,3 +172,7 @@ EMAIL_USE_SSL = False
 EMAIL_PORT=587
 EMAIL_HOST_USER='prabhashbhagat1999@gmail.com'
 EMAIL_HOST_PASSWORD='lwzv zqdz uczk apwb'
+# for heroque
+import dj_database_url
+prod_db=dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(prod_db)
