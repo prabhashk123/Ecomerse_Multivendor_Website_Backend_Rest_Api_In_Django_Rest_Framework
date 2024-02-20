@@ -160,9 +160,9 @@ REST_FRAMEWORK = {
 # cors origin for django rest framework api using reactJs frontend
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
-    'https://ecomersemultivewndorwebsite-e4c58fd3cb4a.herokuapp.com/',
+    # 'https://ecomersemultivewndorwebsite-e4c58fd3cb4a.herokuapp.com/',
     'https://ecomersemultivewndorwebsite-e4c58fd3cb4a.herokuapp.com',
-    'http://ecomersemultivewndorwebsite-e4c58fd3cb4a.herokuapp.com/',
+    # 'http://ecomersemultivewndorwebsite-e4c58fd3cb4a.herokuapp.com/',
 
 ]
 # for image
